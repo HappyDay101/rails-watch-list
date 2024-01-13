@@ -5,3 +5,25 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+require 'uri'
+require 'net/http'
+require 'json'
+
+url = URI("http://tmdb.lewagon.com/3/movie/top_rated")
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+
+response = http.request(request)
+data = JSON.parse(response.read_body)
+
+data['results'].each do |movie_data|
+  Movie.create(
+    title: movie_data['title'],
+    overview: movie_data['overview'],
+    poster_url: "https://image.tmdb.org/t/p/original#{movie_data['poster_path']}",
+    rating: movie_data['vote_average']
+  )
+end
