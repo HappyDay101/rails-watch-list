@@ -18,7 +18,7 @@ class BookmarksController < ApplicationController
 
   def destroy
     @bookmark.destroy
-    redirect_to list_path(@bookmark.list), notice: 'Bookmark was successfully destroyed.'
+    redirect_to list_path(@bookmark.list), status: :see_other, notice: 'Bookmark was successfully destroyed.'
   end
 
   private
