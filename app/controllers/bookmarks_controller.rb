@@ -3,7 +3,22 @@ class BookmarksController < ApplicationController
   before_action :set_bookmark, only: [:destroy]
 
   def new
-    @bookmark = bookmark.new
+    @bookmark = Bookmark.new
+  end
+
+  def create
+    @bookmark = Bookmark.new(bookmark_params)
+    @bookmark.list = @list
+    if @bookmark.save
+      redirect_to @list, notice: 'Bookmark was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @bookmark.destroy
+    redirect_to list_path(@bookmark.list), notice: 'Bookmark was successfully destroyed.'
   end
 
   private
@@ -13,7 +28,7 @@ class BookmarksController < ApplicationController
   end
 
   def set_bookmark
-    @bookmark = bookmark.find(params[:id])
+    @bookmark = Bookmark.find(params[:id])
   end
 
   def bookmark_params
