@@ -3,6 +3,7 @@ class ListsController < ApplicationController
 
   def index
     @lists = List.all
+    @random_movies = Movie.all.sample(6)
   end
 
   def show

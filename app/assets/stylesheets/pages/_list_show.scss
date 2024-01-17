@@ -1,0 +1,7 @@
+.card-hover:hover .card-body {
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the color and opacity for your desired effect */
+}
+
+.card-hover .card-body {
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}

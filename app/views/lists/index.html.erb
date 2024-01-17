@@ -1,15 +1,52 @@
-<!-- app/views/lists/index.html.erb -->
-<h1>All Lists</h1>
-<div class="row">
-  <% @lists.each do |list| %>
-    <div class="col-md-4 mb-4">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= link_to list.name, list %></h5>
-          <%= link_to 'Remove', list, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<div class="container mt-5">
+  <h1 class="text-center">Watch Me, Maybe?</h1>
+
+  <!-- Scrolling Movies -->
+  <div id="scrollingMovies" class="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="2000">
+    <div class="carousel-inner">
+      <% @random_movies.each_with_index do |movie, index| %>
+        <div class="carousel-item <%= 'active' if index == 0 %>">
+          <img src="<%= movie.poster_url %>" class="d-block w-100" alt="<%= movie.title %>">
+          <div class="carousel-caption d-none d-md-block">
+            <h5><%= movie.title %></h5>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+    <button class="carousel-control-prev" type="button" data-bs-target="#scrollingMovies" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#scrollingMovies" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Lists -->
+  <div class="mt-5">
+    <h2>Your Lists</h2>
+    <div class="d-flex flex-wrap">
+      <% @lists.each do |list| %>
+        <%= link_to list_path(list), class: 'text-decoration-none' do %>
+          <div class="card me-3 mb-3 list-card" style="max-width: 18rem;">
+            <% if list.photos.attached? %>
+              <!-- Image removed -->
+            <% end %>
+            <div class="card-body text-center">
+              <h5 class="card-title"><%= list.name %></h5>
+              <p class="card-text"><%= list.movies.count %> movies</p>
+            </div>
+            <div class="card-footer text-center">
+              <%= link_to list, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-dark btn-sm btn-circle' do %>
+                X
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to 'Create List', new_list_path, class: 'btn btn-primary mt-3' %>
 </div>
-<%= link_to 'New List', new_list_path, class: 'btn btn-success' %>

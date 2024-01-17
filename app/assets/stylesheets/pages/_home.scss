@@ -1,1 +1,27 @@
 // Specific CSS for your home-page
+.container-carousel {
+  height: 40vh;  /* 40% of the viewport height */
+  max-width: 100%;  /* Maximum width allowed */
+  margin: 0 auto;  /* Center the carousel horizontally */
+  overflow: hidden;
+}
+
+/* Responsive styling for smaller screens */
+@media (max-width: 768px) {
+  .custom-carousel {
+    height: 30vh;  /* Adjust this value for smaller screens */
+  }
+}
+
+.list-card {
+  transition: transform 0.3s;
+}
+
+.list-card:hover {
+  transform: scale(1.1);
+}
+
+.btn-circle {
+  border-radius: 50%;
+  padding: 5px 10px;
+}
