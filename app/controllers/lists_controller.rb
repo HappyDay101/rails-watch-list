@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show]
+  before_action :set_list, only: [:show, :update]
 
   def index
     @lists = List.all
@@ -28,6 +28,16 @@ class ListsController < ApplicationController
     redirect_to lists_path, notice: 'List was successfully destroyed.'
   end
 
+  def update
+    if @list.update(list_params)
+      @list.reviews.create(comment: params[:list][:comment]) if params[:list][:comment].present?
+
+      redirect_to @list, notice: 'List was successfully updated.'
+    else
+      render :edit
+    end
+  end
+
   private
 
   def set_list
@@ -35,6 +45,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    params.require(:list).permit(:name, photos: [])
+    params.require(:list).permit(:name, photos: [], reviews: [:comment])
   end
 end

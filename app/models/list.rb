@@ -4,4 +4,5 @@ class List < ApplicationRecord
   # has_many :movies, through: :bookmarks
   has_many_attached :photos
   has_many :movies, through: :bookmarks
+  has_many :reviews, dependent: :destroy
 end

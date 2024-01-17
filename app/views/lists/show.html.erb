@@ -13,5 +13,14 @@
     </div>
   <% end %>
 </div>
+
 <%= link_to 'Add Movie', new_list_bookmark_path(@list), class: 'btn btn-primary' %>
 <%= link_to 'Back to lists', lists_path, class: 'btn btn-secondary' %>
+
+<h2>Reviews</h2>
+<div id="reviews">
+  <%= render 'reviews/new', review: @list.reviews.build %>
+  <% @list.reviews.each do |review| %>
+    <p><strong><%= review.content %></strong></p>
+  <% end %>
+</div>
